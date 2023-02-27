@@ -28,7 +28,7 @@ function App() {
   const [sendAmount, setSendAmount] = useState(0.01);
   const debouncedSendAmount = useDebounce(sendAmount, 500);
   const [modalOn, setModalOn] = useState(false);
-  const domain = 'https://tes.ambizeducation.com'; // http://localhost:3000
+  const domain = 'https://tes.ambizeducation.com'; //http://localhost:3000
 
   const clicked = () => {
     setModalOn(true);
@@ -45,7 +45,7 @@ function App() {
     },
   });
 
-  const { write: transfer2 } = useContractWrite(config_send);
+  const { write: donate } = useContractWrite(config_send);
 
   function changeSendAmount(e) {
     setSendAmount(e.target.value);
@@ -126,32 +126,31 @@ function App() {
   return (
     <div className="App text-center">
       <Navigation isConnected={isConnected} connect={connect} clicked={clicked} address={address} userBal={userBal}/>
-      <Header isConnected={isConnected} donationInfo={[totalDonation, donationCount, owner]}/>
+      <Header isConnected={isConnected} connect={connect} donationInfo={[totalDonation, donationCount, owner]}/>
       {modalOn && <Modal setModalOn={setModalOn} disconnect={disconnect}/>}
       {isConnected &&
         <>
-          <label class="block mt-4 mb-2 text-xl font-medium text-gray-900 dark:text-white">Donation Amount</label>
+          <label className="block pt-8 mb-2 text-xl font-medium text-gray-900 dark:text-white">Donation Amount (MATIC)</label>
           <input type="number" className="w-1/2 lg:w-1/3 px-4 bg-gray-50 font-medium rounded-lg border border-gray-300" value={sendAmount} onChange={changeSendAmount} placeholder="Enter amount" />
           <br/>
-
-          <button className="h-12 w-1/4 text-xl mt-8 bg-green cursor-pointer text-white rounded-full" /*disabled={!transfer2}*/ onClick={()=>transfer2?.()}>Donate</button>
+          <button className="h-12 w-1/4 text-xl mt-8 bg-green cursor-pointer text-white rounded-full hover:bg-green-900 hover:scale-95" /*disabled={!transfer2}*/ onClick={()=>donate?.()}>Donate</button>
 
       <p className="text-2xl font-bold pt-10">Latest Donation</p>
       {transactionData.map((transaction) => {
         return (
-        <div class="bg-white p-6 m-6 sm:mx-20 sm:my-6 lg:mx-40 lg:my-6 rounded-lg shadow-lg">
-          <div class="flex flex-row items-center">
-            <div class="flex-initial w-12 pr-4">
+        <div className="bg-white p-6 m-6 sm:mx-20 sm:my-6 lg:mx-40 lg:my-6 rounded-lg shadow-lg">
+          <div className="flex flex-row items-center">
+            <div className="flex-initial w-12 pr-4">
               <img className="w-12" alt="" src={profileImage}></img>
             </div>
-            <div class="flex-auto w-32">
+            <div className="flex-auto w-32">
               <p className="text-xl">{transaction[0]}</p>
             </div>
-            <div class="flex-auto w-16">
+            <div className="flex-auto w-16">
               <p className="text-xl font-semibold">{transaction[1]/1E18} MATIC</p>
             </div>
-            <div class="flex-auto w-16">
-              <p className="text-xl font-semibold">{transaction[2]}</p>
+            <div className="flex-auto w-16">
+              <p className="text-xl">{transaction[2]}</p>
             </div>
           </div>
         </div>
