@@ -144,7 +144,7 @@ function App() {
               <img className="w-12" alt="" src={profileImage}></img>
             </div>
             <div className="flex-auto w-32">
-              <p className="text-xl">{transaction[0]}</p>
+              <p className="text-xl truncate">{transaction[0]}</p>
             </div>
             <div className="flex-auto w-16">
               <p className="text-xl font-semibold">{transaction[1]/1E18} MATIC</p>
